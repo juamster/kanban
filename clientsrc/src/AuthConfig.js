@@ -1,3 +1,3 @@
-export const domain = "";
-export const clientId = "";
-export const audience = "";
+export const domain = "amster.auth0.com";
+export const clientId = "mBLv1Gx0Zz44LawrG26PwmMWBQpheYaB";
+export const audience = "https://projectbook-api.com";
