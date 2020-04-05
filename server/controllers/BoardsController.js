@@ -1,6 +1,7 @@
 import BaseController from "../utils/BaseController";
 import Auth0Provider from "@bcwdev/auth0provider";
 import { dbContext } from "../db/DbContext";
+import { boardsService } from "../services/BoardsService";
 
 export class BoardsController extends BaseController {
   constructor() {
@@ -9,26 +10,23 @@ export class BoardsController extends BaseController {
       .use(Auth0Provider.getAuthorizedUserInfo)
       .get("", this.getBoards)
       .get("/:boardId", this.getBoard)
+      .delete("/:boardId", this.delete)
+      .put("/:boardId", this.update)
       .post("", this.create);
   }
 
   async getBoards(req, res, next) {
     try {
-      // FIXME MUST be abstracted to a service
-      let boards = await dbContext.Boards.find({ creatorEmail: req.userInfo.email });
+      req.query.creatorEmail = req.userInfo.email;
+      let boards = await boardsService.getAll(req.userInfo.email);
       res.send(boards);
     } catch (error) {
       next(error);
     }
-
   }
   async getBoard(req, res, next) {
     try {
-      // FIXME MUST be abstracted to a service
-      let board = await dbContext.Boards.findOne({
-        _id: req.params.boardId,
-        creatorEmail: req.userInfo.email
-      });
+      let board = await boardsService.getOne(req.userInfo.email, req.params.boardId);
       res.send(board);
     } catch (error) {
       next(error);
@@ -37,15 +35,31 @@ export class BoardsController extends BaseController {
   }
   async create(req, res, next) {
     try {
-      // FIXME MUST be abstracted to a service
       // NOTE ONLY TRUST THE SERVER TO DO THIS
       req.body.creatorEmail = req.userInfo.email;
-      let board = await dbContext.Boards.create(req.body);
+      let board = await boardsService.create(req.body);
       res.send(board);
     } catch (error) {
       next(error);
     }
+  }
 
+  async delete(req, res, next) {
+    try {
+
+      let board = await boardsService.delete(req.userInfo.email, req.params.boardId);
+      res.send(board);
+    } catch (e) {
+      next(e);
+    }
+  }
+  async update(req, res, next) {
+    try {
+      let board = await boardsService.update(req.params.boardId, req.body);
+      res.send(board);
+    } catch (e) {
+      next(e);
+    }
   }
 
 }
