@@ -12,6 +12,7 @@
 <script>
 export default {
   name: "Board",
+  /* Kick off request to get the board, use the route parameter */
   mounted() {
     this.$store.dispatch("getBoard", this.$route.params.boardId);
   },

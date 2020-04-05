@@ -9,7 +9,7 @@ class TasksService {
     return await dbContext.Tasks.find({ creatorEmail: email, list: listId })
   }
 
-  async getAllOnBoard(email, boardId) {
+  async getAllByBoardId(email, boardId) {
     //TODO: add a check for email later
     return await dbContext.Tasks.find({ creatorEmail: email, board: boardId })
   }

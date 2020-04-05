@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- FIXME extract to a BoardEditorComponent -->
+    <!-- FIXME extract to a BoardEditor Component -->
     <form @submit.prevent="createBoard">
       <div class="mb-3">
         <label for="name">Name:</label>
@@ -15,9 +15,10 @@
         <button class="btn btn-success btn-block">Create Board</button>
       </div>
     </form>
-    <!-- FIXME CREATE A BoardCardComponent -->
+    <!-- FIXME CREATE A BoardCard Component -->
     <div class="boards">
       <div class="card p-2 my-2 elevation-4" v-for="board in boards" :key="board.id">
+        <!-- these are links to a vue called Board  -->
         <router-link :to="{name: 'Board', params: {boardId: board.id}}">{{board.name}}</router-link>
       </div>
     </div>

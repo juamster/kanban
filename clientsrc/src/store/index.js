@@ -31,6 +31,7 @@ export default new Vuex.Store({
 
   },
   modules: {
+    /*  load all the other stores */
     boardsStore
   }
 });

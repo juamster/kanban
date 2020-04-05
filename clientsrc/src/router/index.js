@@ -8,6 +8,7 @@ function loadView(path) {
   return () => import("../views/" + path);
 }
 
+/* Adding new routes here .. Jake's fancy stuff, really can just do add routes here */
 export const dashboardRoutes = [{
   path: "",
   name: "Dashboard.Profile",
@@ -20,7 +21,7 @@ export const dashboardRoutes = [{
   component: loadView("Boards.vue")
 }];
 
-
+/* this is how we add things to the navigator */
 const routes = [
   {
     path: '/',

@@ -3,7 +3,7 @@
     <div class="row mt-3">
       <div class="col-2 mx-auto">
         <div class="d-flex flex-column links">
-          <!-- TODO add routes -->
+          <!-- put new routes in router/index.js-->
           <router-link
             v-for="route in dashboardRoutes"
             :key="route.name"
@@ -29,6 +29,7 @@
 <script>
 import { dashboardRoutes } from "../router/index";
 export default {
+  /* add a new route in router/indexjs */
   name: "Dashboard",
   data() {
     return {
