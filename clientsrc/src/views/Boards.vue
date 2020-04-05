@@ -16,10 +16,13 @@
       </div>
     </form>
     <!-- FIXME CREATE A BoardCard Component -->
+
     <div class="boards">
       <div class="card p-2 my-2 elevation-4" v-for="board in boards" :key="board.id">
-        <!-- these are links to a vue called Board  -->
-        <router-link :to="{name: 'Board', params: {boardId: board.id}}">{{board.name}}</router-link>
+        <div>
+          <BoardCard :board="board" />
+        </div>
+        <!-- <router-link :to="{name: 'Board', params: {boardId: board.id}}">{{board.name}}</router-link> -->
       </div>
     </div>
   </div>
@@ -27,8 +30,12 @@
 
 <script>
 import { Board } from "../models/Board";
+import BoardCard from "@/components/BoardCard.vue";
 export default {
   name: "Boards",
+  components: {
+    BoardCard
+  },
   computed: {
     profile() {
       return this.$store.state.profile;
