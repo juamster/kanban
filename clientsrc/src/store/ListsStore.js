@@ -1,6 +1,7 @@
 import { List } from "../models/List"
 import { $resource } from "./resource";
 
+
 export default {
   state: {
     lists: [],
