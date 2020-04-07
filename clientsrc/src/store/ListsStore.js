@@ -19,7 +19,6 @@ export default {
       state.lists.push(new List(list));
     },
     deleteList(state, list) {
-
       console.log("deleting from the store id:", list.id);
       let i = state.lists.findIndex(l => l.id == list.id);
       if (i != -1) {
@@ -46,6 +45,7 @@ export default {
       commit("setList", list);
     },
     async createList({ commit }, listData) {
+      console.log("going to create a list", listData)
       let list = await $resource.post("api/lists", listData);
       // REVIEW when creating a list this sets it as the active list
       commit("setList", list);

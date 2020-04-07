@@ -7,7 +7,7 @@ export class List {
   constructor({
     id = "",
     name = "",
-    board = {},
+    board = "",
     creator = {},
     creatorEmail = ""
   } = {}) {

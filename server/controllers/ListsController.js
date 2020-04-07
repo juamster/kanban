@@ -5,14 +5,14 @@ import { listsService } from "../services/ListsService";
 
 export class ListsController extends BaseController {
   constructor() {
-    super("api/");
+    super("api");
     this.router
       .use(Auth0Provider.getAuthorizedUserInfo)
-      .get("boards/:boardId/lists", this.getListsByBoardId)
-      .get("lists/:listId", this.getOneList)
-      .delete("lists/:listId", this.delete)
-      .post("lists", this.create)
-      .put("lists/:listId", this.update);
+      .get("/boards/:boardId/lists", this.getListsByBoardId)
+      .get("/lists/:listId", this.getOneList)
+      .delete("/lists/:listId", this.delete)
+      .post("/lists", this.create)
+      .put("/lists/:listId", this.update);
   }
 
   /*  get all the lists on a board */

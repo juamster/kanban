@@ -5,13 +5,11 @@
   "main": "index.js",
   "scripts": {
     "debug": "node index.js",
-    "start": "node index.js",
+    "start": "env NODE_ENV=production node index.js",
     "dev": "node index.js",
     "setup": "npm install",
     "serve": "npm run serve --prefix ./clientsrc",
-    "build": "npm run build:setup && npm run build --prefix ./clientsrc",
-    "build:setup": "npm run postinstall && npm install @vue/cli@latest",
-    "postinstall": "cd clientsrc && npm install"
+    "build": "npm install @vue/cli@latest && env NODE_ENV=test npm install --prefix ./clientsrc && npm run build --prefix ./clientsrc"
   },
   "author": "JudyAmster",
   "license": "ISC",

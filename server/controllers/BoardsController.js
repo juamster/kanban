@@ -46,7 +46,6 @@ export class BoardsController extends BaseController {
 
   async delete(req, res, next) {
     try {
-
       let board = await boardsService.delete(req.userInfo.email, req.params.boardId);
       res.send(board);
     } catch (e) {

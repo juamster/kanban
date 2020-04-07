@@ -1,7 +1,7 @@
 <template>
   <div class="ListComponent">
     <div class="boxes d-flex">
-      <div class="box">list.name</div>
+      <div class="box">{{list.name}}</div>
     </div>
   </div>
 </template>
@@ -20,7 +20,6 @@ export default {
     //   return this.$store.state.boardsStore.board;
     // }
   },
-  data() {},
   methods: {}
 };
 </script>
