@@ -5,18 +5,18 @@ import { listsService } from "../services/ListsService";
 
 export class ListsController extends BaseController {
   constructor() {
-    super("api/lists");
+    super("api/");
     this.router
       .use(Auth0Provider.getAuthorizedUserInfo)
-      .get("/:boardId", this.getAllLists)
-      .get("/:listId", this.getOneList)
-      .delete("/:listId", this.delete)
-      .post("", this.create)
-      .put("/:listId", this.update);
+      .get("boards/:boardId/lists", this.getListsByBoardId)
+      .get("lists/:listId", this.getOneList)
+      .delete("lists/:listId", this.delete)
+      .post("lists", this.create)
+      .put("lists/:listId", this.update);
   }
 
   /*  get all the lists on a board */
-  async getAllLists(req, res, next) {
+  async getListsByBoardId(req, res, next) {
     try {
       let lists = await listsService.getAll(req.userInfo.email, req.params.boardId);
       res.send(lists);

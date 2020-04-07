@@ -1,28 +1,25 @@
 <template>
   <div>
-    <!-- FIXME extract to a BoardEditor Component -->
-    <form @submit.prevent="createBoard">
-      <div class="mb-3">
-        <label for="name">Name:</label>
-        <input class="form-control" type="text" v-model="editable.name" />
-      </div>
-      <div class="mb-3">
-        <label for="name">Description:</label>
-        <input class="form-control" type="text" v-model="editable.description" />
-      </div>
+    <!-- Calls BoardEditor Component OR BoardUpdater -->
+    <div>
+      <BoardEditor />
 
-      <div class="my-3">
-        <button class="btn btn-success btn-block">Create Board</button>
-      </div>
-    </form>
-    <!-- FIXME CREATE A BoardCard Component -->
+      <!-- <div @edit="doEdit">
+        <div v-if="doEdit === true">
+          <BoardUpdator />
+        </div>
+        <div v-else>
+          <BoardEditor />
+        </div>
+      </div>-->
+    </div>
 
+    <!-- Call all the  BoardCard Component s-->
     <div class="boards">
       <div class="card p-2 my-2 elevation-4" v-for="board in boards" :key="board.id">
         <div>
           <BoardCard :board="board" />
         </div>
-        <!-- <router-link :to="{name: 'Board', params: {boardId: board.id}}">{{board.name}}</router-link> -->
       </div>
     </div>
   </div>
@@ -31,10 +28,14 @@
 <script>
 import { Board } from "../models/Board";
 import BoardCard from "@/components/BoardCard.vue";
+import BoardEditor from "@/components/BoardEditor.vue";
+import BoardUpdator from "@/components/BoardUpdator.vue";
 export default {
   name: "Boards",
   components: {
-    BoardCard
+    BoardCard,
+    BoardEditor,
+    BoardUpdator
   },
   computed: {
     profile() {
@@ -44,6 +45,7 @@ export default {
       return this.$store.state.boardsStore.boards;
     }
   },
+  props: { doEdit: { type: Boolean, default: false } },
   data() {
     return {
       editable: new Board()
@@ -53,6 +55,11 @@ export default {
     createBoard() {
       this.$store.dispatch("createBoard", this.editable);
       this.editable = new Board();
+    },
+    openBoardDetails() {
+      console.log(
+        "How do I fill in details in the form, can I pass data to Board editor"
+      );
     }
   }
 };
