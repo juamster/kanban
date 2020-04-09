@@ -1,7 +1,11 @@
 <template>
   <div class="ListComponent">
     <div class="boxes d-flex">
-      <div class="box">{{list.name}}</div>
+      <div class="box d-flex justify-content-between align-items-top">
+        {{list.name}}
+        <i class="fa fa-trash text-muted mr-2" @click="deleteList"></i>
+        <i class="fa fa-pencil text-muted mr-2" @click="editList"></i>
+      </div>
     </div>
   </div>
 </template>
@@ -12,15 +16,28 @@ export default {
   props: {
     list: { type: Object, required: true }
   },
-  computed: {
-    // profile() {
-    //   return this.$store.state.profile;
-    // },
-    // board() {
-    //   return this.$store.state.boardsStore.board;
-    // }
-  },
-  methods: {}
+  computed: {},
+  methods: {
+    async deleteList() {
+      let yes = await this.$confirm(
+        "Are you sure you want to delete the List?"
+      );
+      if (!yes) {
+        return;
+      } else {
+        this.$store.dispatch("deleteList", this.list);
+      }
+    },
+
+    async editList() {
+      let yes = await this.$confirm("Edit List Feature is not yet implemented");
+      if (!yes) {
+        return;
+      } else {
+        // this.$store.dispatch("deleteList", this.list);
+      }
+    }
+  }
 };
 </script>
 

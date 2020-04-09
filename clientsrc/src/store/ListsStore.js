@@ -55,7 +55,7 @@ export default {
     async deleteList({ commit }, listData) {
       let list = await $resource.delete("api/lists/" + listData.id);
       /* deletes the element of the array.   */
-      commit("deleteList", list.board);
+      commit("deleteList", list);
     },
     async updateList({ commit }, listData) {
       let list = await $resource.put("api/list/", listData);

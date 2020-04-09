@@ -1,5 +1,5 @@
 <template>
-  <div class="boardcard d-flex align-itmes-center justify-content-between align-items-center">
+  <div class="boardcard d-flex justify-content-between align-items-center">
     <!-- these are links to a vue called Board  -->
     <router-link :to="{name: 'Board', params: {boardId: board.id}}">{{board.name}}</router-link>
     <div v-if="$auth.isAuthenticated && $auth.user.email == board.creatorEmail">
