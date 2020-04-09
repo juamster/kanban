@@ -9,6 +9,7 @@ import { QuickVue } from "@bcwdev/quickvue";
 
 Vue.use(QuickVue);
 
+
 Vue.use(Auth0Plugin, {
   domain,
   clientId,
@@ -22,6 +23,7 @@ Vue.use(Auth0Plugin, {
   }
 });
 
+console.log("show the config", vue.config);
 
 Vue.config.productionTip = false;
 
