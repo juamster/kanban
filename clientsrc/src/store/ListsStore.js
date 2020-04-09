@@ -58,7 +58,8 @@ export default {
       commit("deleteList", list);
     },
     async updateList({ commit }, listData) {
-      let list = await $resource.put("api/list/", listData);
+      let list = await $resource.put("api/lists/" + listData.id, listData);
+      console.log("back from update", list.id);
       /* sets the list as active list */
       commit("updateList", list);
     },

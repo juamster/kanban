@@ -12,8 +12,8 @@
     >
       <div class="modal-dialog modal-dialog-centered" role="document" v-if="open">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">
+          <div class="modal-header" v-if="showHeader">
+            <h5 class="modal-title">
               <slot name="title"></slot>
             </h5>
             <button
@@ -51,7 +51,8 @@ export default {
   name: "modal",
   props: {
     open: { type: Boolean, default: false, required: true },
-    showFoot: { type: Boolean, default: false }
+    showFoot: { type: Boolean, default: false },
+    showHeader: { type: Boolean, default: false }
   },
   methods: {
     close() {

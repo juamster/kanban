@@ -9,17 +9,19 @@ function loadView(path) {
 }
 
 /* Adding new routes here .. Jake's fancy stuff, really can just do add routes here */
-export const dashboardRoutes = [{
-  path: "",
-  name: "Dashboard.Profile",
-  displayName: "Profile",
-  component: loadView("Profile.vue")
-}, {
-  path: "boards",
-  name: "Dashboard.Boards",
-  displayName: "Boards",
-  component: loadView("Boards.vue")
-}];
+export const dashboardRoutes = [
+  {
+    path: "boards",
+    name: "Dashboard.Boards",
+    displayName: "Boards",
+    component: loadView("Boards.vue")
+  },
+  {
+    path: "",
+    name: "Dashboard.Profile",
+    displayName: "Profile",
+    component: loadView("Profile.vue")
+  }];
 
 /* this is how we add things to the navigator */
 const routes = [

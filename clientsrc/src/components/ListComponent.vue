@@ -1,7 +1,7 @@
 <template>
   <div class="ListComponent">
-    <div class="boxes d-flex">
-      <div class="box d-flex justify-content-between align-items-top">
+    <div class="boxes d-flex align-items-top">
+      <div class="box d-flex justify-content-between">
         {{list.name}}
         <i class="fa fa-trash text-muted mr-2" @click="deleteList"></i>
         <i class="fa fa-pencil text-muted mr-2" @click="editList"></i>
@@ -30,12 +30,7 @@ export default {
     },
 
     async editList() {
-      let yes = await this.$confirm("Edit List Feature is not yet implemented");
-      if (!yes) {
-        return;
-      } else {
-        // this.$store.dispatch("deleteList", this.list);
-      }
+      this.$emit("edit", this.list);
     }
   }
 };
@@ -48,7 +43,7 @@ export default {
 }
 .box {
   min-height: 80vh;
-  width: 200px;
+  width: 250px;
   background-color: var(--info);
 }
 </style>

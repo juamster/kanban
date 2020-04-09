@@ -1,7 +1,7 @@
 <template>
   <div class="home container-fluid">
     <div class="row mt-3">
-      <h1>Hello World</h1>
+      <h1>JukanBan</h1>
     </div>
   </div>
 </template>

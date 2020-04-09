@@ -1,5 +1,18 @@
 <template>
+  <!-- this code is not used  -->
   <div class="ListEditor">
+    <modal :open="open" @close="open = false" showFoot showHeader @save="save">
+      <div slot="title">"Create a new list"</div>
+      <div>
+        <form>
+          <div class="form-group">
+            <label for="title">Edit List Name</label>
+            <input class="form-control" type="text" v-model="list.name" />
+          </div>
+        </form>
+      </div>
+    </modal>
+
     <form @submit.prevent="createList">
       <div class="mb-3">
         <label for="name">Name:</label>

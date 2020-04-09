@@ -5,13 +5,13 @@
         <button @click="createList">+ Add another list</button>
         <h1>{{board.name}}</h1>
       </span>
-      <modal :open="open" @close="open = false" showFoot @save="save">
-        <!-- <div slot="title">""</div> -->
+      <modal :open="open" @close="open = false" show-foot @save="save">
+        <div slot="title">Create a new list</div>
         <div>
           <form>
             <div class="form-group">
-              <label for="title">Title</label>
-              <input class="form-control" type="text" v-model="editable.name" />
+              <label for="title">List Name?</label>
+              <input class="form-control" type="text" v-model.trim="editable.name" required />
             </div>
           </form>
         </div>
@@ -20,7 +20,7 @@
 
     <div class="boxes d-flex">
       <div class="m-1" v-for="list in lists" :key="list.id">
-        <ListComponent class="my-1" :list="list" />
+        <ListComponent class="my-1" :list="list" @edit="editList" />
       </div>
     </div>
   </div>
@@ -62,11 +62,24 @@ export default {
       this.open = true;
     },
     save() {
+      if (this.editable.name == "") {
+        return;
+      }
       this.editable.board = this.$route.params.boardId;
-      console.log("calling dispatch with: ", this.editable);
-      this.$store.dispatch("createList", this.editable);
+      if (this.editable.id) {
+        // edit this list
+        this.$store.dispatch("updateList", this.editable);
+      } else {
+        // create list
+        this.$store.dispatch("createList", this.editable);
+      }
       this.editable = new List();
       this.open = false;
+    },
+    editList(list) {
+      this.editable = list;
+      // this opens my modal
+      this.open = true;
     }
   }
 };

@@ -29,9 +29,10 @@ class ListsService {
 
   async update(listId, newData) {
 
-    return await dbContext.Lists.findByIdAndUpdate(listId, newData), {
-      new: true
-    };
+    return await dbContext.Lists.findOneAndUpdate({
+      _id: listId,
+      creatorEmail: newData.creatorEmail
+    }, newData, { new: true, runValidators: true });
 
   }
 }
