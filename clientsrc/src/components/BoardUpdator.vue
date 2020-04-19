@@ -1,7 +1,8 @@
+
 <template>
   <div class="BoardUpdator">
     <form @submit.prevent="updateBoard">
-      <div class="mb-3">
+      <!-- <div class="mb-3">
         <label for="name">Name:</label>
         <input class="form-control" type="text" v-model="board.name" />
       </div>
@@ -12,7 +13,7 @@
 
       <div class="my-3">
         <button class="btn btn-success btn-block">Update Board</button>
-      </div>
+      </div>-->
     </form>
   </div>
 </template>

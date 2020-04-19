@@ -16,18 +16,18 @@ export class TasksController extends BaseController {
   // }
 
   constructor() {
-    super("api/");
+    super("api");
     this.router
       .use(Auth0Provider.getAuthorizedUserInfo)
-      .get("lists/:listId/tasks", this.getAllTasksByListId)
-      .get("boards/:boardId/tasks", this.getAllTasksByBoardId)
-      .get("tasks/:taskId", this.getOneTask)
-      .delete("tasks/:taskId", this.delete)
-      .post("tasks/", this.create)
-      .put("tasks/:taskId", this.update);
+      .get("/lists/:listId/tasks", this.getTasksByListId)
+      .get("/boards/:boardId/tasks", this.getAllTasksByBoardId)
+      .get("/tasks/:taskId", this.getOneTask)
+      .delete("/tasks/:taskId", this.delete)
+      .post("/tasks", this.create)
+      .put("/tasks/:taskId", this.update);
   }
   /* gets all tasks for a particular list */
-  async getAllTasksByListId(req, res, next) {
+  async getTasksByListId(req, res, next) {
     try {
       let tasks = await tasksService.getAll(req.userInfo.email, req.params.listId);
       res.send(tasks);
@@ -38,6 +38,7 @@ export class TasksController extends BaseController {
   /* get all the tasks for a particular board */
   async getAllTasksByBoardId(req, res, next) {
     try {
+      console.log("in TasksController, getting all tasks by boardId", req.params.boardId);
       let tasks = await tasksService.getAllByBoardId(req.userInfo.email, req.params.boardId);
       res.send(tasks);
     } catch (error) {

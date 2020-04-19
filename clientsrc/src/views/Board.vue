@@ -27,7 +27,6 @@
 </template>
 
 <script>
-// import { List } from "../models/List";
 import ListComponent from "@/components/ListComponent.vue";
 import modal from "@/components/Modal.vue";
 import { List } from "../models/List";
@@ -45,8 +44,10 @@ export default {
   },
   /* Kick off request to get the board, use the route parameter */
   mounted() {
+    // These are necessary to get the boards, lists & tasks
     this.$store.dispatch("getBoard", this.$route.params.boardId);
     this.$store.dispatch("getLists", this.$route.params.boardId);
+    this.$store.dispatch("getTasks", this.$route.params.boardId);
   },
   computed: {
     board() {
@@ -55,6 +56,11 @@ export default {
     lists() {
       return this.$store.state.listsStore.lists;
     }
+    // tasks() {
+    //   return (
+    //     this.$store.getters.listsStore.tasks[this.$route.params.boardId] || []
+    //   );
+    // }
   },
   methods: {
     createList() {
