@@ -21,41 +21,33 @@ export default {
       state.lists.push(new List(list));
     },
     deleteList(state, list) {
-      console.log("deleting from the store id:", list.id);
       let i = state.lists.findIndex(l => l.id == list.id);
       if (i != -1) {
         state.lists.splice(i, 1);
       }
     },
     updateList(state, list) {
-      console.log("updating from the store id:", list.id);
       let i = state.lists.findIndex(l => l.id == list.id);
       if (i != -1) {
         state.lists.splice(i, 1, list);
       }
     },
     setTasks(state, tasks = []) {
-      console.log("in store setTask: ", tasks);
       state.tasks = tasks;
     },
 
     addTask(state, task) {
-      console.log("in store addTask: adding a task", task);
       state.tasks.push(new Task(task));
     },
     deleteTask(state, task) {
-      console.log("deleting from the store Task id:", task.id);
       let i = state.tasks.findIndex(t => t.id == task.id);
       if (i != -1) {
         state.tasks.splice(i, 1);
       }
     },
     updateTask(state, task) {
-      console.log("updating from the store task id:", task.id);
-      let i = state.tasks.findIndex(l => l.id == task.id);
-      if (i != -1) {
-        state.tasks.splice(i, 1, task);
-      }
+      let index = state.tasks.findIndex(i => i.id == task.id);
+      state.tasks.splice(index, 1, task);
     },
 
   },
@@ -70,10 +62,7 @@ export default {
       commit("setList", list);
     },
     async createList({ commit }, listData) {
-      console.log("going to create a list", listData)
       let list = await $resource.post("api/lists", listData);
-      // this.$route.params.boardId;  is this added to listData
-      // REVIEW when creating a list this sets it as the active list
       commit("setList", list);
       // this does add the list to the list of lists
       commit("addList", list);
@@ -85,18 +74,15 @@ export default {
     },
     async updateList({ commit }, listData) {
       let list = await $resource.put("api/lists/" + listData.id, listData);
-      console.log("back from update", list.id);
       /* sets the list as active list */
       commit("updateList", list);
     },
     /* TASKS */
     async getTasks({ commit }, boardId) {
-      console.log("in store getTask: getting for boardId: ", boardId);
       let tasks = await $resource.get("api/boards/" + boardId + "/tasks");
       commit("setTasks", tasks);
     },
     async createTask({ commit }, taskData) {
-      console.log("In the store going to create a task", taskData)
       let task = await $resource.post("api/tasks", taskData);
       commit("addTask", task);
     },
@@ -107,15 +93,21 @@ export default {
     },
     async updateTask({ commit }, taskData) {
       let task = await $resource.put("api/tasks/" + taskData.id, taskData);
-      console.log("back from update", task.id);
       /* sets the list as active list */
       commit("updateTask", task);
     },
+    async moveTask({ commit }, { taskData, to }) {
+
+      taskData.list = to;
+      let task = await $resource.put("api/tasks/" + taskData.id, taskData);
+      // tell the server to update this task
+      commit("updateTask", taskData);
+
+    }
+
   },
   getters: {
-
     tasks(state) {
-      console.log("in the getter");
       let tasksDictionary = {}
       state.tasks.forEach(task => {
         if (!tasksDictionary[task.list]) {
@@ -123,7 +115,6 @@ export default {
         }
         tasksDictionary[task.list].push(task)
       })
-      console.log("The tasksDictionary is: ", tasksDictionary)
       return tasksDictionary;
     }
 

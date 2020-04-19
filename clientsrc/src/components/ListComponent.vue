@@ -1,5 +1,13 @@
 <template>
-  <div class="listcomponent">
+  <div
+    ref="droppable"
+    class="listcomponent"
+    droppable="true"
+    @dragover.prevent
+    @drop.capture="moveTask"
+    @dragenter="dragEnter"
+    @dragleave="dragLeave"
+  >
     <div class="boxes d-flex align-items-top">
       <div class="box container">
         <div class="row justify-content-between">
@@ -28,8 +36,15 @@
         </div>
 
         <div>
-          <div class="m-1" v-for="task in tasks" :key="task.id">
-            <TaskCard class="my-1" :taskData="task" :listId="task.list" @edit="editTask" />
+          <div class="list-items">
+            <TaskCard
+              class="m-1"
+              v-for="task in tasks"
+              :key="task.id"
+              :taskData="task"
+              :listId="task.list"
+              @edit="editTask"
+            />
           </div>
         </div>
       </div>
@@ -72,22 +87,38 @@ export default {
   props: {
     list: { type: Object, required: true }
   },
-  // mounted() {
-  //   console.log("going to get  the tasks for the listID", this.list.id);
-  //   this.$store.dispatch("getTasks", this.list.id);
-  // },
   computed: {
     tasks() {
-      console.log(
-        "ListComponent: getting the tasks for listId: ",
-        this.list.id
-      );
       let res = this.$store.getters.tasks[this.list.id];
-      console.log("the tasks are: ", res);
       return res;
     }
   },
   methods: {
+    moveTask() {
+      console.log("task dropped: going to move the item");
+      this.$refs.droppable.classList.remove("droppable");
+      // get the task off of the event storage
+      let thisTask = JSON.parse(event.dataTransfer.getData("data"));
+      // get the starting location off of the event storage
+      let from = event.dataTransfer.getData("from");
+      // don't allow drops in the same room
+      console.log("this list id is: ", this.list.id);
+      console.log("The from is: ", from);
+
+      if (from == this.list.id) {
+        return;
+      }
+      this.$store.dispatch("moveTask", {
+        taskData: new Task(thisTask),
+        to: this.list.id
+      });
+    },
+    dragEnter() {
+      this.$refs.droppable.classList.add("droppable");
+    },
+    dragLeave() {
+      this.$refs.droppable.classList.remove("droppable");
+    },
     async deleteList() {
       let yes = await this.$confirm(
         "Are you sure you want to delete the List?"
@@ -142,5 +173,13 @@ export default {
   min-height: 80vh;
   width: 250px;
   background-color: var(--primary);
+}
+.droppable {
+  border-style: dashed;
+  border-color: grey;
+  background: var(--warning);
+}
+.list-items {
+  border-color: grey;
 }
 </style>

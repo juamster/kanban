@@ -56,11 +56,6 @@ export default {
     lists() {
       return this.$store.state.listsStore.lists;
     }
-    // tasks() {
-    //   return (
-    //     this.$store.getters.listsStore.tasks[this.$route.params.boardId] || []
-    //   );
-    // }
   },
   methods: {
     createList() {

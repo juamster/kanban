@@ -56,7 +56,8 @@ export default {
     },
     async logout() {
       await this.$auth.logout({
-        redirectTo: window.location.origin
+        returnTo: window.location.origin
+        // redirectTo: window.location.origin
       });
     }
   },
